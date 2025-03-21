@@ -15,10 +15,14 @@ import { useKrispNoiseFilter } from "@livekit/components-react/krisp";
 import { AnimatePresence, motion } from "framer-motion";
 import { MediaDeviceFailure } from "livekit-client";
 import { useCallback, useEffect, useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "../components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar";
 import { Badge } from "../components/ui/badge";
 import type { ConnectionDetails } from "./api/connection-details/route";
+import { Linkedin } from "lucide-react";
+import { Github } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Twitter } from "lucide-react";
 
 export default function Page() {
   const [connectionDetails, updateConnectionDetails] = useState<ConnectionDetails | undefined>(
@@ -59,7 +63,7 @@ export default function Page() {
             <CardDescription className="text-lg">Solution Architect</CardDescription>
             <div className="flex flex-wrap gap-2 mt-2">
               <Badge variant="secondary">ai</Badge>
-              <Badge variant="secondary">React</Badge>
+              <Badge variant="secondary">react</Badge>
               
               <Badge variant="secondary">dotnet</Badge>
             </div>
@@ -85,6 +89,26 @@ export default function Page() {
         <NoAgentNotification state={agentState} />
       </LiveKitRoom>
       </CardContent>
+      <CardFooter className="flex justify-center gap-3 pt-2">
+        <a href="https://github.com/Aaron-Redmond" target="_blank" rel="noopener noreferrer">
+          <Button variant="outline" size="icon" className="rounded-full h-9 w-9">
+            <Github className="h-4 w-4" />
+            <span className="sr-only">GitHub</span>
+          </Button>
+        </a>
+        <a href="https://www.linkedin.com/in/aaron-redmond-06325823/" target="_blank" rel="noopener noreferrer">
+          <Button variant="outline" size="icon" className="rounded-full h-9 w-9">
+            <Linkedin className="h-4 w-4" />
+            <span className="sr-only">LinkedIn</span>
+          </Button>
+        </a>
+        <a href="https://twitter.com/_aaronredmond" target="_blank" rel="noopener noreferrer">
+          <Button variant="outline" size="icon" className="rounded-full h-9 w-9">
+            <Twitter className="h-4 w-4" />
+            <span className="sr-only">Twitter</span>
+          </Button>
+        </a>
+      </CardFooter>
       </Card>
     </main>
   );
