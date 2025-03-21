@@ -29,15 +29,24 @@ WORKDIR /app
 # Install pnpm
 RUN corepack enable && corepack prepare pnpm@9.15.9 --activate
 
+# Create required directories
+RUN mkdir -p public .next/cache
+
 # Copy necessary files from builder
-COPY --from=builder /app/package.json .
-COPY --from=builder /app/pnpm-lock.yaml* .
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/pnpm-lock.yaml* ./
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
-COPY --from=builder /app/public ./public
 
-# Install production dependencies only
+# Install production dependencies
 RUN pnpm install --prod --frozen-lockfile
+
+# Set proper permissions
+RUN chown -R node:node .
+
+# Use non-root user
+USER node
 
 # Expose the port the app runs on
 EXPOSE 3000
