@@ -1,6 +1,7 @@
 import "@livekit/components-styles";
 import { Public_Sans } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const publicSans400 = Public_Sans({
   weight: "400",
@@ -14,7 +15,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`h-full ${publicSans400.className}`}>
-      <body className="h-full">{children}</body>
+      <body className="h-full"> <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+            disableTransitionOnChange
+          >{children}</ThemeProvider>
+          </body>
     </html>
   );
 }

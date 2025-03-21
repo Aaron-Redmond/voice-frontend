@@ -1,7 +1,7 @@
 "use client";
 
-import { CloseIcon } from "@/components/CloseIcon";
-import { NoAgentNotification } from "@/components/NoAgentNotification";
+import { CloseIcon } from "../components/CloseIcon";
+import { NoAgentNotification } from "../components/NoAgentNotification";
 import {
   AgentState,
   BarVisualizer,
@@ -15,6 +15,9 @@ import { useKrispNoiseFilter } from "@livekit/components-react/krisp";
 import { AnimatePresence, motion } from "framer-motion";
 import { MediaDeviceFailure } from "livekit-client";
 import { useCallback, useEffect, useState } from "react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar";
+import { Badge } from "../components/ui/badge";
 import type { ConnectionDetails } from "./api/connection-details/route";
 
 export default function Page() {
@@ -44,6 +47,26 @@ export default function Page() {
 
   return (
     <main data-lk-theme="default" className="h-full grid content-center bg-[var(--lk-bg)]">
+       <Card className="max-w-lg mx-auto shadow-lg">
+      <CardHeader className="pb-4">
+        <div className="flex items-center gap-4">
+          <Avatar className="h-20 w-20 border-2 border-primary/10">
+            <AvatarImage src="/placeholder.svg?height=80&width=80" alt="Profile picture" />
+            <AvatarFallback>AR</AvatarFallback>
+          </Avatar>
+          <div>
+            <CardTitle className="text-2xl font-bold">Aaron Redmond</CardTitle>
+            <CardDescription className="text-lg">Solution Architect</CardDescription>
+            <div className="flex flex-wrap gap-2 mt-2">
+              <Badge variant="secondary">ai</Badge>
+              <Badge variant="secondary">React</Badge>
+              
+              <Badge variant="secondary">dotnet</Badge>
+            </div>
+          </div>
+        </div>
+      </CardHeader>
+      <CardContent className="space-y-4 pb-2">
       <LiveKitRoom
         token={connectionDetails?.participantToken}
         serverUrl={connectionDetails?.serverUrl}
@@ -61,6 +84,8 @@ export default function Page() {
         <RoomAudioRenderer />
         <NoAgentNotification state={agentState} />
       </LiveKitRoom>
+      </CardContent>
+      </Card>
     </main>
   );
 }
@@ -74,7 +99,7 @@ function SimpleVoiceAssistant(props: { onStateChange: (state: AgentState) => voi
     <div className="h-[300px] max-w-[90vw] mx-auto">
       <BarVisualizer
         state={state}
-        barCount={5}
+        barCount={4}
         trackRef={audioTrack}
         className="agent-visualizer"
         options={{ minHeight: 24 }}
@@ -132,6 +157,6 @@ function ControlBar(props: { onConnectButtonClicked: () => void; agentState: Age
 function onDeviceFailure(error?: MediaDeviceFailure) {
   console.error(error);
   alert(
-    "Error acquiring camera or microphone permissions. Please make sure you grant the necessary permissions in your browser and reload the tab"
+    "Error acquiring microphone permissions. Please make sure you grant the necessary permissions in your browser and reload the tab"
   );
 }
