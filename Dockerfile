@@ -12,6 +12,9 @@ COPY package.json pnpm-lock.yaml* ./
 # Install dependencies
 RUN pnpm install --frozen-lockfile
 
+# Create public directory if it doesn't exist
+RUN mkdir -p public
+
 # Copy the rest of the application code
 COPY . .
 
